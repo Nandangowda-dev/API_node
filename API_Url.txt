@@ -1,0 +1,15 @@
+Featch All Users (Method:Get) = 127.0.0.1:9090/api/v1/user
+
+Fetch User by ID (Method:Get) = 127.0.0.1:9090/api/v1/user/678cfcea46f808de7f9b829c
+Update User by ID (Method:Patch) = 127.0.0.1:9090/api/v1/user/678cfcea46f808de7f9b829c
+
+Create Users (Method:Post) = 127.0.0.1:9090/api/v1/user
+
+Delete User by ID (Method:Delete) =127.0.0.1:9090/api/v1/user/678cfcea46f808de7f9b829c
+
+
+filter getAllUser (Method:Post) = 127.0.0.1:9090/api/v1/user?age[lte]=26&firstName=Shridhara
+
+
+AuthUsers_login (Method:Post)= 127.0.0.1:9090/api/v1/user/Login
+AuthUsers_signup (Method:Post)= 127.0.0.1:9090/api/v1/user/Signup
