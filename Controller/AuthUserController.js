@@ -1,10 +1,15 @@
+const Crypto = require('crypto');
+const multer = require('multer');
+const sharp = require('sharp');
+const path = require('path');
 const AuthUser = require('../Model/AuthModel');
 const aSyncError = require('../utils/aSyncErrorHandler');
 const customError = require('../utils/ErrorHandler');
 const Common_Check = require('../utils/Common_action');
 const sendMail = require('../Communication/Email');
 const loadTemplate = require('../utils/LoadEmailTemplates');
-const Crypto = require('crypto');
+const multer_Img = require('../utils/multer_Img_Upload');
+
 
 exports.Signup = aSyncError(async (req, res, next) => {
     const newUser = await AuthUser.create(req.body);
@@ -22,7 +27,7 @@ exports.Signup = aSyncError(async (req, res, next) => {
     } catch (err) {
         console.error('Error processing email:', err);
     }
-
+    newUser.password = undefined;
     res.status(201).json({
         status: 'success',
         token,
@@ -104,15 +109,14 @@ exports.forgotPassword = aSyncError(async (req, res, next) => {
     res.status(200).json({
         status: 'success',
         data: {
-            message: 'Done',
-            resetUrl
+            message: 'Done'
         }
     })
 });
 
 exports.resetPassword = aSyncError(async (req, res, next) => {
     const token = Crypto.createHash('sha256').update(req.params.token).digest('hex');
-    
+
     const user = await AuthUser.findOne({
         passwordResetToken: token,
         passwordResetTokenExpriere: { $gt: Date.now() }
@@ -122,19 +126,85 @@ exports.resetPassword = aSyncError(async (req, res, next) => {
         const error = new customError("Token is Invalid or has expried.", 400);
         return next(error);
     }
-    user.password=req.body.pasword;
-    user.confirmPassword=req.body.confirmPassword;
+    user.password = req.body.pasword;
+    user.confirmPassword = req.body.confirmPassword;
     user.passwordResetToken = undefined;
     user.passwordResetTokenExpriere = undefined;
-    user.passwordChangedAt=Common_Check.dateFormate(Date.now());
+    user.passwordChangedAt = Common_Check.dateFormate(Date.now());
     user.save();
 
     const resetLoginToken = Common_Check.signToken(user._id);
     res.status(200).json({
         status: 'success',
-        token:resetLoginToken,
+        token: resetLoginToken,
         data: {
             message: 'Password Updated Successfully'
         }
     })
 });
+
+const upload = multer({
+    storage: multer_Img.multerStorage,
+    fileFilter: multer_Img.multerFilter
+});
+
+//exports.uploadUserPhoto=aSyncError(upload.single('photo'));
+exports.uploadUserPhoto = aSyncError(async (req, res, next) => {
+    await upload.single('photo')(req, res, (err) => {
+        if (err) {
+            return next(err);
+        }
+        if (!req.file) {
+            const error = new customError('Please upload a photo.', 400);
+            return next(error);
+        }
+        req.body.photo = req.file.filename;
+        next();
+    });
+});
+
+exports.imageProcessing = aSyncError(async (req, res, next) => {
+    if (!req.file) return next();
+
+    req.file.filename = `user-${req.user.id}-${Date.now()}.jpeg`;
+    let i = sharp(req.file.buffer).resize(500, 500)
+        .toFormat('jpeg')
+        .jpeg({ quality: 90 })
+        .toFile(`../Uploadfiles/AuthUser_IMG/${req.file.filename}`);
+    console.log(i);
+    next();
+})
+
+exports.updateAuthProfileUser = aSyncError(async (req, res, next) => {
+    console.log(req.photo);
+    console.log(req.file);
+    console.log(req.params.id);
+    const users = await AuthUser.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true });
+    res.status(200).json({
+        status: 'success',
+        data: {
+            users
+        }
+    })
+});
+
+
+exports.AuthProfilepdf = aSyncError(async (req, res, next) => {
+    const options = {
+        format: 'A4',
+        orientation: 'portrait',
+        border: '10mm',
+    };
+
+    const htmlPath = path.resolve(__dirname, '../Templates/Email_Templates/registration-success.html');
+    
+    res.pdfFromHTML(htmlPath, options, (err, result) => {
+        if (err) {
+            console.error('Error generating PDF:', err);
+            return res.status(500).send('Error generating PDF');
+        }
+
+        res.download(result.filename, 'generated.pdf');
+    });
+});
+

@@ -17,7 +17,6 @@ exports.Protect=aSyncError(async(req,res,next)=>{
         return next(error);
     }
 
-    ////Validate Token////
     const validateToken= await util.promisify(jwt.verify)(token,process.env.SECRET_STR);
     console.log(validateToken.id);
 

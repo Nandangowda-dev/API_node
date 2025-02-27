@@ -2,6 +2,8 @@ const Users = require('./../Model/UserModel')
 const ApiFeature = require('./../utils/ApiFeatute');
 const aSyncError=require('../utils/aSyncErrorHandler');
 const customError=require('../utils/ErrorHandler');
+const pdfGenerator=require('../PDF_Generator/pdfGenerator');
+
 exports.getAllUsers = aSyncError(async(req,res,next)=>{
         console.log(req)
         const feature =new ApiFeature(Users.find(),req.query)
@@ -38,8 +40,10 @@ exports.getUser=aSyncError(async(req,res,next)=>{
         const error=new customError("for this Id not mapped any user!",401);
         return next(error);
     }
+    //const pdf=pdfGenerator.pdfGenerator(users);
         res.status(200).json({
             status:'success',
+            //pdf,
             data:{
                 users
             }

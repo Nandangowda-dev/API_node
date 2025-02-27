@@ -2,6 +2,7 @@ const mongoose=require('mongoose');
 const validator=require('validator');
 const bcrypt=require('bcryptjs');
 const Crypto=require('crypto');
+const { type } = require('os');
 
 const UserAuthSchema=new mongoose.Schema({
         name:{
@@ -38,7 +39,11 @@ const UserAuthSchema=new mongoose.Schema({
         },
         passwordResetToken:String,
         passwordResetTokenExpriere:Date,
-        passwordChangedAt:String
+        passwordChangedAt:String,
+        photo:{
+            type:String,
+            default:'default.jpg'
+        }
 });
 
 UserAuthSchema.pre('save',async function(next){

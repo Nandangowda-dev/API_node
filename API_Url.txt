@@ -13,3 +13,10 @@ filter getAllUser (Method:Post) = 127.0.0.1:9090/api/v1/user?age[lte]=26&firstNa
 
 AuthUsers_login (Method:Post)= 127.0.0.1:9090/api/v1/user/Login
 AuthUsers_signup (Method:Post)= 127.0.0.1:9090/api/v1/user/Signup
+AuthUsers_forgotpassword(Method:Post)= 127.0.0.1:9090/api/v1/user/forgotpassword
+AuthUsers_resetpassword (Method:Post)= 127.0.0.1:9090/api/v1/user/resetpassword/036cd41245370d0c80d71de4a5f9aeb68653d4b0eb2c819b525e12cfc38571e8
+
+
+mongodb+srv://nandanec47:<db_password>@cluster0.rf1jiqw.mongodb.net/
+
+Procuction URL : https://api-node-ilsv.onrender.com/api/v1/user/
