@@ -9,6 +9,7 @@ const globalError = require('./Controller/ErrroController');
 let app=express();
 
 app.use(express.json());
+app.use(require('express-pdf'));
 if(process.env.NODE_ENV === "development"){
     app.use(morgan('dev'));
 }
