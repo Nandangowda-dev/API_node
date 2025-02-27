@@ -50,5 +50,4 @@ app.all("*",(req,res,next)=>{
 })
 app.use(globalError);
 
->>>>>>> 071a5bf827fa85798a925b0a325656593f91e8e9
 module.exports=app;
