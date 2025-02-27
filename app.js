@@ -1,28 +1,28 @@
 
-const dotenv = require('dotenv');
-dotenv.config({path:'./config.env'});
-const express=require('express')
-const morgan=require('morgan')
-const userRoute=require('./Router/userRoute');
-const authRoute=require('./Router/AuthRoute');
-const customError = require('./utils/ErrorHandler');
-const globalError = require('./Controller/ErrroController');
-let app=express();
+// const dotenv = require('dotenv');
+// dotenv.config({path:'./config.env'});
+// const express=require('express')
+// const morgan=require('morgan')
+// const userRoute=require('./Router/userRoute');
+// const authRoute=require('./Router/AuthRoute');
+// const customError = require('./utils/ErrorHandler');
+// const globalError = require('./Controller/ErrroController');
+// let app=express();
 
-app.use(express.json());
-app.use(require('express-pdf'));
-if(process.env.NODE_ENV === "development"){
-    app.use(morgan('dev'));
-}
+// app.use(express.json());
+// app.use(require('express-pdf'));
+// if(process.env.NODE_ENV === "development"){
+//     app.use(morgan('dev'));
+// }
 
-app.use('/api/v1/user',userRoute);
-app.use('/api/v1/User',authRoute);
+// app.use('/api/v1/user',userRoute);
+// app.use('/api/v1/User',authRoute);
 
-app.all("*",(req,res,next)=>{
-    const error= new customError("Not Found",501);
-    next(error);
-})
-app.use(globalError);
+// app.all("*",(req,res,next)=>{
+//     const error= new customError("Not Found",501);
+//     next(error);
+// })
+// app.use(globalError);
 
 
 // const dotenv = require('dotenv');
@@ -49,5 +49,31 @@ app.use(globalError);
 //     next(error);
 // })
 // app.use(globalError);
+
+const dotenv = require('dotenv');
+dotenv.config({path:'./config.env'});
+const express=require('express');
+const cors = require('cors');
+const morgan=require('morgan')
+const userRoute=require('./Router/userRoute');
+const authRoute=require('./Router/AuthRoute');
+const customError = require('./utils/ErrorHandler');
+const globalError = require('./Controller/ErrroController');
+let app=express();
+app.use(cors());
+app.use(express.json());
+app.use(require('express-pdf'));
+if(process.env.NODE_ENV === "development"){
+    app.use(morgan('dev'));
+}
+
+app.use('/api/v1/user',userRoute);
+app.use('/api/v1/User',authRoute);
+
+app.all("*",(req,res,next)=>{
+    const error= new customError("Not Found",501);
+    next(error);
+})
+app.use(globalError);
 
 module.exports=app;
