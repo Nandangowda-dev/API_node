@@ -60,7 +60,11 @@ const authRoute=require('./Router/AuthRoute');
 const customError = require('./utils/ErrorHandler');
 const globalError = require('./Controller/ErrroController');
 let app=express();
-app.use(cors());
+app.use(cors({
+  origin: 'http://localhost:3000',  // Restrict to localhost:3000
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
 app.use(express.json());
 app.use(require('express-pdf'));
 if(process.env.NODE_ENV === "development"){
