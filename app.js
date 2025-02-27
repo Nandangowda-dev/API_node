@@ -24,7 +24,7 @@ app.all("*",(req,res,next)=>{
 })
 app.use(globalError);
 
-=======
+
 const dotenv = require('dotenv');
 dotenv.config({path:'./config.env'});
 const express=require('express')
