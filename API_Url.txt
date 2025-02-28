@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 Featch All Users (Method:Get) = 127.0.0.1:9090/api/v1/user
 
 Fetch User by ID (Method:Get) = 127.0.0.1:9090/api/v1/user/678cfcea46f808de7f9b829c
@@ -20,27 +19,7 @@ AuthUsers_resetpassword (Method:Post)= 127.0.0.1:9090/api/v1/user/resetpassword/
 
 mongodb+srv://nandanec47:<db_password>@cluster0.rf1jiqw.mongodb.net/
 
-=======
-Featch All Users (Method:Get) = 127.0.0.1:9090/api/v1/user
-
-Fetch User by ID (Method:Get) = 127.0.0.1:9090/api/v1/user/678cfcea46f808de7f9b829c
-Update User by ID (Method:Patch) = 127.0.0.1:9090/api/v1/user/678cfcea46f808de7f9b829c
-
-Create Users (Method:Post) = 127.0.0.1:9090/api/v1/user
-
-Delete User by ID (Method:Delete) =127.0.0.1:9090/api/v1/user/678cfcea46f808de7f9b829c
-
-
-filter getAllUser (Method:Post) = 127.0.0.1:9090/api/v1/user?age[lte]=26&firstName=Shridhara
-
-
-AuthUsers_login (Method:Post)= 127.0.0.1:9090/api/v1/user/Login
-AuthUsers_signup (Method:Post)= 127.0.0.1:9090/api/v1/user/Signup
-AuthUsers_forgotpassword(Method:Post)= 127.0.0.1:9090/api/v1/user/forgotpassword
-AuthUsers_resetpassword (Method:Post)= 127.0.0.1:9090/api/v1/user/resetpassword/036cd41245370d0c80d71de4a5f9aeb68653d4b0eb2c819b525e12cfc38571e8
-
-
-mongodb+srv://nandanec47:<db_password>@cluster0.rf1jiqw.mongodb.net/
-
->>>>>>> 071a5bf827fa85798a925b0a325656593f91e8e9
 Procuction URL : https://api-node-ilsv.onrender.com/api/v1/user/
+
+
+git remote add origin https://github.com/Nandangowda-dev/API_node.git
