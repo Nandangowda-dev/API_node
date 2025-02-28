@@ -44,8 +44,11 @@ exports.Login = aSyncError(async (req, res, next) => {
         return next(error);
     }
     const user = await AuthUser.findOne({ email });
-    const PasswordMatch = await Common_Check.comparePasswordInDb(password, user.password);
-
+    let PasswordMatch;
+    if(user!=null){
+        PasswordMatch = await Common_Check.comparePasswordInDb(password, user.password);
+    }
+    
     if (!user || !PasswordMatch) {
         const error = new customError("Invalid Email or Password.", 401);
         return next(error);
