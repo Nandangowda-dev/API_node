@@ -204,17 +204,10 @@ exports.AuthProfilepdf = aSyncError(async (req, res, next) => {
     
     res.pdfFromHTML(htmlPath, options, (err, result) => {
         if (err) {
-            console.error('Error generating PDF:', err);
+            console.error('Error generating PDFs:', err);
             return res.status(500).send('Error generating PDF');
         }
 
         res.download(result.filename, 'generated.pdf');
     });
 });
-<<<<<<< .mine
-//    Nandan 
-//    new changes
-=======
-//    Nandan
-
->>>>>>> .theirs
