@@ -41,6 +41,7 @@ exports.Login = aSyncError(async (req, res, next) => {
     const { email, password } = req.body;
     if (!email || !password) {
         const error = new customError("Please Provide Email id and Password.", 400);
+        console.log(error);
         return next(error);
     }
     const user = await AuthUser.findOne({ email });
@@ -173,7 +174,7 @@ exports.imageProcessing = aSyncError(async (req, res, next) => {
     let i = sharp(req.file.buffer).resize(500, 500)
         .toFormat('jpeg')
         .jpeg({ quality: 90 })
-        .toFile(`../Uploadfiles/AuthUser_IMG/${req.file.filename}`);
+        .toFile(`./Uploadfiles/AuthUser_IMG/${req.file.filename}`);
     console.log(i);
     next();
 })
