@@ -174,7 +174,7 @@ exports.imageProcessing = aSyncError(async (req, res, next) => {
     let i = sharp(req.file.buffer).resize(500, 500)
         .toFormat('jpeg')
         .jpeg({ quality: 90 })
-        .toFile(`./Uploadfiles/AuthUser_IMG/${req.file.filename}`);
+        .toFile(`../Uploadfiles/AuthUser_IMG/${req.file.filename}`);
     console.log(i);
     next();
 })
@@ -207,7 +207,7 @@ exports.AuthProfilepdf = aSyncError(async (req, res, next) => {
             console.error('Error generating PDFs:', err);
             return res.status(500).send('Error generating PDF');
         }
-        console.log(res)
+        
         res.download(result.filename, 'generated.pdf');
     });
 });

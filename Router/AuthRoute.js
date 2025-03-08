@@ -14,5 +14,5 @@ router.route('/profileUpdate/:id').patch(Protected_Route.Protect,
                                         AuthUserController.uploadUserPhoto,
                                         AuthUserController.imageProcessing,
                                         AuthUserController.updateAuthProfileUser);
-router.route('/pdfstring/:id').get(AuthUserController.AuthProfilepdf);
+//router.route('/pdfstring/:id').get(AuthUserController.AuthProfilepdf);
 module.exports=router;
