@@ -207,7 +207,7 @@ exports.AuthProfilepdf = aSyncError(async (req, res, next) => {
             console.error('Error generating PDFs:', err);
             return res.status(500).send('Error generating PDF');
         }
-
+        console.log(res)
         res.download(result.filename, 'generated.pdf');
     });
 });
